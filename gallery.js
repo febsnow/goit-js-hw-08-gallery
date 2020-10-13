@@ -1,10 +1,13 @@
 import galleryImages from './gallery-items.js';
 
+const body = document.querySelector('body');
 const galleryEl = document.querySelector('.gallery.js-gallery');
+const lightbox = document.querySelector('.lightbox.js-lightbox');
+const lightboxImg = document.querySelector('.lightbox__image');
 
 //Вариант создания разметки 1
-const createGallerymarkUp = galleryMarkup(galleryImages);
-galleryEl.insertAdjacentHTML('beforeend', createGallerymarkUp);
+const createGalleryMarkUp = galleryMarkup(galleryImages);
+galleryEl.insertAdjacentHTML('beforeend', createGalleryMarkUp);
 
 function galleryMarkup(images) {
   return images
@@ -61,32 +64,33 @@ galleryEl.addEventListener('click', onGalleryItemClick);
 function onGalleryItemClick(evt) {
   evt.preventDefault();
 
-  const body = document.querySelector('body');
   body.style.overflow = 'hidden';
 
-  const lightbox = document.querySelector('.lightbox.js-lightbox');
   lightbox.classList.add('is-open');
 
-  const lightboxImg = document.querySelector('.lightbox__image');
-  const lightboxImgSource = evt.target.dataset.source;
-  const lightboxImgAlt = evt.target.alt;
-  lightboxImg.src = lightboxImgSource;
-  lightboxImg.alt = lightboxImgAlt;
+  lightboxImg.src = evt.target.dataset.source;
+  lightboxImg.alt = evt.target.alt;
 
   window.addEventListener('keydown', onWindowKeydown);
+
   function onWindowKeydown(evt) {
     if (evt.code == 'Escape') {
-      lightboxClose();
+      lightboxClose(evt);
     } else if (evt.code == 'ArrowRight') {
       nextImage(galleryImages);
     } else if (evt.code == 'ArrowLeft') {
       previousImage(galleryImages);
     }
   }
+
   lightbox.addEventListener('click', lightboxClose);
 
   function lightboxClose(evt) {
-    if (evt.target.classList.value === 'lightbox__overlay' || evt.target.dataset.action === 'close-lightbox') {
+    if (
+      evt.code === 'Escape' ||
+      evt.target.classList.value === 'lightbox__overlay' ||
+      evt.target.dataset.action === 'close-lightbox'
+    ) {
       lightbox.classList.remove('is-open');
       lightboxImg.src = ' ';
       lightboxImg.alt = ' ';
