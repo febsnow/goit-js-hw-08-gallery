@@ -109,8 +109,10 @@ function onGalleryItemClick(evt) {
     } else {
       index += 1;
     }
-    const nextPic = arr[index].original;
-    lightboxImg.src = nextPic;
+    const nextPicSrc = arr[index].original;
+    const nextPicAlt = arr[index].description;
+    lightboxImg.src = nextPicSrc;
+    lightboxImg.alt = nextPicAlt;
   }
 
   function previousImage(arr) {
@@ -121,7 +123,9 @@ function onGalleryItemClick(evt) {
       index = arr.length;
     }
     index -= 1;
-    const previousPic = arr[index].original;
-    lightboxImg.src = previousPic;
+    const previousPicSrc = arr[index].original;
+    const previousPicAlt = arr[index].description;
+    lightboxImg.src = previousPicSrc;
+    lightboxImg.alt = previousPicAlt;
   }
 }
