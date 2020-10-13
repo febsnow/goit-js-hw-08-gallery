@@ -79,8 +79,9 @@ function onGalleryItemClick(evt) {
       lightboxClose();
     } else if (evt.code == 'ArrowRight') {
       nextImage(galleryImages);
+    } else if (evt.code == 'ArrowLeft') {
+      previousImage(galleryImages);
     }
-    console.log(evt.code);
   }
 
   const overlay = document.querySelector('.lightbox__overlay');
@@ -97,5 +98,29 @@ function onGalleryItemClick(evt) {
 
     window.removeEventListener('keydown', onWindowKeydown);
     overlay.removeEventListener('click', lightboxClose);
+    lightboxCloseBtn.removeEventListener('click', lightboxClose);
+  }
+  function nextImage(arr) {
+    let index = arr.findIndex(el => {
+      return el.original === lightboxImg.src;
+    });
+    if (index === arr.length - 1) {
+      index = 0;
+    }
+    index += 1;
+    const nextPic = arr[index].original;
+    lightboxImg.src = nextPic;
+  }
+
+  function previousImage(arr) {
+    let index = arr.findIndex(el => {
+      return el.original === lightboxImg.src;
+    });
+    if (index === 0) {
+      index = arr.length;
+    }
+    index -= 1;
+    const previousPic = arr[index].original;
+    lightboxImg.src = previousPic;
   }
 }
