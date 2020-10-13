@@ -106,8 +106,9 @@ function onGalleryItemClick(evt) {
     });
     if (index === arr.length - 1) {
       index = 0;
+    } else {
+      index += 1;
     }
-    index += 1;
     const nextPic = arr[index].original;
     lightboxImg.src = nextPic;
   }
