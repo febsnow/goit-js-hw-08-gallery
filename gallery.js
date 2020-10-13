@@ -83,7 +83,20 @@ function onGalleryItemClick(evt) {
       previousImage(galleryImages);
     }
   }
+  lightbox.addEventListener('click', lightboxClose);
 
+  function lightboxClose(evt) {
+    if (evt.target.classList.value === 'lightbox__overlay' || evt.target.dataset.action === 'close-lightbox') {
+      lightbox.classList.remove('is-open');
+      lightboxImg.src = ' ';
+      lightboxImg.alt = ' ';
+      body.style.overflow = '';
+
+      window.removeEventListener('keydown', onWindowKeydown);
+    }
+  }
+
+  /* Отдельные слушатели на overlay  и button
   const overlay = document.querySelector('.lightbox__overlay');
   overlay.addEventListener('click', lightboxClose);
 
@@ -99,7 +112,8 @@ function onGalleryItemClick(evt) {
     window.removeEventListener('keydown', onWindowKeydown);
     overlay.removeEventListener('click', lightboxClose);
     lightboxCloseBtn.removeEventListener('click', lightboxClose);
-  }
+  }*/
+
   function nextImage(arr) {
     let index = arr.findIndex(el => {
       return el.original === lightboxImg.src;
